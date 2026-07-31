@@ -27,10 +27,14 @@ async function createEnquiry(req, res) {
       return res.status(400).json({ success: false, message: "Invalid email address." });
     }
 
+    // Debug logs
+    console.log("Received body:", req.body);
+
     // Insert into PostgreSQL enquiries table
-    await pool.query(
+    const result = await pool.query(
       `INSERT INTO enquiries (society_name, chairman_name, email, mobile)
-       VALUES ($1, $2, $3, $4)`,
+       VALUES ($1, $2, $3, $4)
+       RETURNING *`,
       [
         society_name.trim(),
         chairman_name.trim(),
@@ -39,13 +43,22 @@ async function createEnquiry(req, res) {
       ]
     );
 
+    console.log("Inserted:", result.rows[0]);
+
     return res.status(201).json({
       success: true,
       message: "Enquiry submitted successfully. We will contact you soon.",
     });
   } catch (err) {
-    console.error("[createEnquiry] error:", err);
-    return res.status(500).json({ success: false, message: "Internal server error. Please try again." });
+    console.error("========== ERROR ==========");
+    console.error(err);
+    console.error(err.message);
+    console.error(err.stack);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 }
 
