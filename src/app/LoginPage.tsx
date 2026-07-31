@@ -4,10 +4,11 @@ import {
   Eye, EyeOff, Mail, Lock, ArrowLeft, CheckCircle2, Phone, UserPlus,
 } from "lucide-react";
 import logo from "@/assets/logo.png.jpg";
+import { API_BASE } from "@/api";
 
+// Fallback admin credentials (used only when backend is unreachable)
 const VALID_EMAIL    = "digisociety.in@gmail.com";
 const VALID_PASSWORD = "digisociety";
-const API_BASE = (import.meta.env.VITE_API_URL ?? "http://localhost:4001") + "/api";
 
 // Registered users stored in memory (persisted in localStorage)
 function getRegisteredUsers(): { email: string; password: string }[] {

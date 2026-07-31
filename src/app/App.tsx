@@ -98,7 +98,7 @@ const WHY_US = [
 ];
 
 // ── Enquiry Form Component ─────────────────────────────────────────────────
-const API_BASE = (import.meta.env.VITE_API_URL ?? "https://digisociety-backend.onrender.com") + "/api";
+import { API_BASE } from "@/api";
 
 function EnquiryForm() {
   const [form, setForm] = useState({
