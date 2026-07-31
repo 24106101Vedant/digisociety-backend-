@@ -21,6 +21,7 @@ import {
 import logo from "@/assets/logo.png.jpg";
 import LoginPage from "./LoginPage";
 import Dashboard from "./Dashboard";
+import { API_BASE } from "@/api";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -98,7 +99,6 @@ const WHY_US = [
 ];
 
 // ── Enquiry Form Component ─────────────────────────────────────────────────
-import { API_BASE } from "@/api";
 
 function EnquiryForm() {
   const [form, setForm] = useState({
