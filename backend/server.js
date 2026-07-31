@@ -16,6 +16,8 @@ const bcrypt  = require("bcryptjs");
 const db          = require("./db/database");
 const authRoutes  = require("./routes/auth");
 const adminRoutes = require("./routes/admin");
+const enquiryRoutes  = require("./routes/enquiry");
+const createTables   = require("./config/createTables");
 
 const app  = express();
 const PORT = process.env.PORT || 4000;
@@ -31,7 +33,10 @@ const allowedOrigins = [
   // Firebase Hosting (production)
   "https://digisociety-6765e.web.app",
   "https://digisociety-6765e.firebaseapp.com",
-  // Optional: custom domain via env var (e.g. https://www.digisociety.in)
+  // Custom domain
+  "https://digisociety.in",
+  "https://www.digisociety.in",
+  // Optional: extra origin via env var
   ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
 ];
 
@@ -58,8 +63,13 @@ app.use((req, _res, next) => {
 
 // ─── Routes ───────────────────────────────────────────────────────────────
 
-app.use("/api/auth",  authRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/auth",    authRoutes);
+app.use("/api/admin",  adminRoutes);
+app.use("/api/enquiry", enquiryRoutes);
+
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "DigiSociety Backend is running successfully!" });
+});
 
 app.get("/api/health", (_req, res) => {
   res.json({ success: true, message: "DigiSociety API is running.", timestamp: new Date().toISOString() });
@@ -83,18 +93,21 @@ app.use((err, _req, res, _next) => {
   await db.readyPromise;
   console.log("✅  Database ready.");
 
-  // 2. Auto-seed the admin user if not present
+  // 2. Ensure all tables exist
+  await createTables();
+
+  // 3. Auto-seed the admin user if not present
   const ADMIN_EMAIL    = "digisociety.in@gmail.com";
   const ADMIN_PASSWORD = "digisociety";
 
-  const existing = db.get(
+  const existing = await db.get(
     "SELECT id FROM users WHERE LOWER(email) = LOWER(?)",
     [ADMIN_EMAIL]
   );
 
   if (!existing) {
     const hash = await bcrypt.hash(ADMIN_PASSWORD, 12);
-    db.run(
+    await db.run(
       `INSERT INTO users (email, password, full_name, role, is_active)
        VALUES (?, ?, 'Vedant Kirtane', 'admin', 1)`,
       [ADMIN_EMAIL.toLowerCase(), hash]
@@ -111,11 +124,16 @@ app.use((err, _req, res, _next) => {
     console.log(`║   Running on http://localhost:${PORT}       ║`);
     console.log("╚══════════════════════════════════════════╝");
     console.log("\n  Endpoints:");
+    console.log("  POST  /api/auth/register");
     console.log("  POST  /api/auth/login");
     console.log("  GET   /api/auth/me");
     console.log("  POST  /api/auth/logout");
     console.log("  POST  /api/auth/forgot-password");
+    console.log("  POST  /api/enquiry");
+    console.log("  GET   /api/enquiry          (admin)");
+    console.log("  PUT   /api/enquiry/:id      (admin)");
     console.log("  GET   /api/admin/dashboard");
+    console.log("  GET   /api/admin/enquiries");
     console.log("  GET   /api/admin/users");
     console.log("  GET   /api/admin/login-logs");
     console.log("  GET   /api/health\n");
