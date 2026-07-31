@@ -70,7 +70,7 @@ export default function LoginPage({ onBack, onLoginSuccess }: LoginPageProps) {
       u => u.email.toLowerCase() === emailInput && u.password === password
     );
     if (found) {
-      const user = { id: Date.now(), email: found.email, full_name: found.email.split("@")[0], role: "member" };
+      const user = { id: Date.now(), email: found.email, name: found.email.split("@")[0], role: "member" };
       localStorage.setItem("ds_token", "LOCAL_AUTH");
       localStorage.setItem("ds_user", JSON.stringify(user));
       setLoading(false);
@@ -100,7 +100,7 @@ export default function LoginPage({ onBack, onLoginSuccess }: LoginPageProps) {
 
     await new Promise(r => setTimeout(r, 600));
     if (emailInput === VALID_EMAIL.toLowerCase() && password === VALID_PASSWORD) {
-      const user = { id: 1, email: VALID_EMAIL, full_name: "DigiSociety Admin", role: "admin" };
+      const user = { id: 1, email: VALID_EMAIL, name: "DigiSociety Admin", role: "admin" };
       localStorage.setItem("ds_token", "LOCAL_AUTH");
       localStorage.setItem("ds_user", JSON.stringify(user));
       setLoading(false); onLoginSuccess();

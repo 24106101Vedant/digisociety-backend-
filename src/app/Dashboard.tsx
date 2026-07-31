@@ -216,7 +216,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   const [expandedItems,setExpandedItems]= useState<Set<string>>(new Set(["admin"]));
 
   const storedUser = (() => { try { return JSON.parse(localStorage.getItem("ds_user") || "{}"); } catch { return {}; } })();
-  const displayName = storedUser.full_name || storedUser.email || "Admin";
+  const displayName = storedUser.name || storedUser.email || "Admin";
 
   function handleLogout() {
     localStorage.removeItem("ds_token");
