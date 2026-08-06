@@ -144,8 +144,8 @@ export default function Home({ onGetStarted, loggedIn, onLogout }: HomeProps) {
               </div>
               <h1 className="text-5xl lg:text-6xl font-black leading-tight mb-4" style={{ fontFamily: "'Raleway', sans-serif" }}>
                 <span className="block" style={{ background: "linear-gradient(90deg,#06b6d4,#10b981)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 20px rgba(6,182,212,0.5))" }}>DigiSociety</span>
-                <span className="block text-4xl lg:text-5xl" style={{ background: "linear-gradient(90deg,#7c3aed,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(124,58,237,0.4))" }}>Smart. Simple.</span>
-                <span className="block" style={{ background: "linear-gradient(90deg,#f97316,#ef4444)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(249,115,22,0.4))" }}>Digital.</span>
+                <span className="block text-4xl lg:text-5xl" style={{ background: "linear-gradient(90deg,#7c3aed,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(124,58,237,0.4))" }}>Taking Your Community</span>
+                <span className="block" style={{ background: "linear-gradient(90deg,#f97316,#ef4444)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", filter: "drop-shadow(0 0 15px rgba(249,115,22,0.4))" }}>into a Smarter Future</span>
               </h1>
               <p className="text-slate-600 text-lg font-semibold leading-relaxed mb-8 max-w-lg">
                 Manage your housing society <span className="text-cyan-600 font-bold">digitally</span> with ease.
