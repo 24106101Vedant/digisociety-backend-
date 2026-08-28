@@ -384,7 +384,8 @@ export default function LoginPage({ onBack, onLoginSuccess }: LoginPageProps) {
                   <p className="text-slate-500 font-semibold text-sm mb-1">
                     A 6-digit OTP has been sent to
                   </p>
-                  <p className="text-cyan-600 font-bold text-sm mb-6">{forgotEmail}</p>
+                  <p className="text-cyan-600 font-bold text-sm mb-2">{forgotEmail}</p>
+                  <p className="text-slate-400 text-xs font-semibold mb-6">OTP is valid for <span className="text-violet-600 font-bold">15 minutes</span>. After expiry, use Resend OTP to get a new one.</p>
                   <form onSubmit={handleVerifyOtp} className="space-y-5">
                     <div>
                       <label className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">6-Digit OTP</label>
