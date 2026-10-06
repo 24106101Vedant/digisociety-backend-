@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Environment secrets — NEVER commit these
+.env
+*.env
+run-backend.bat
+
+# IDE
+.idea/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Uploads (local file storage before S3)
+uploads/
