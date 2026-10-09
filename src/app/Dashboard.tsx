@@ -5,7 +5,7 @@ import {
   ClipboardList, Building2, Menu, LogOut, Bell, ChevronDown,
   IndianRupee, UserCheck, Eye, Home, Layers,
   UserPlus, Upload, UsersRound, FolderOpen, MessageSquare,
-  AlertCircle, UserCog, Lock, Edit,
+  AlertCircle, UserCog, Lock, Edit, Network,
   Layers2, Wallet, BookMarked, PiggyBank, Percent, Settings2,
   Zap, Store, ArrowLeftRight, CreditCard, Banknote, GitCompare,
   Coins, RefreshCw, BarChart2, LayoutDashboard, ShieldCheck,
