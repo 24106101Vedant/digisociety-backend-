@@ -1,17 +1,29 @@
 # dependencies
 node_modules/
+backend/node_modules/
 
 # build output
 dist/
+build/
+out/
 
-# env files
+# Gradle
+.gradle/
+
+# env files — NEVER commit these
 .env
 .env.local
 .env.production
+*.env
+run-backend.bat
 
 # backend data
-backend/node_modules/
 backend/data/
+
+# IDE
+.idea/
+*.iml
+*.iws
 
 # OS files
 .DS_Store
@@ -19,4 +31,7 @@ Thumbs.db
 
 # logs
 *.log
-node_modules
+logs/
+
+# Uploads (local file storage before S3)
+uploads/
