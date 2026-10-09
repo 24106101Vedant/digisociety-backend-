@@ -3,14 +3,38 @@ import React from "react";
 import {
   BookOpen, Landmark, TrendingUp, Users, FileText, ReceiptText,
   ClipboardList, Building2, Menu, LogOut, Bell, ChevronDown,
-  IndianRupee, UserCheck, CalendarCheck, Eye, Home, Layers,
+  IndianRupee, UserCheck, Eye, Home, Layers,
   UserPlus, Upload, UsersRound, FolderOpen, MessageSquare,
-  AlertCircle, Network, Briefcase, UserCog, Lock, Edit,
+  AlertCircle, UserCog, Lock, Edit,
   Layers2, Wallet, BookMarked, PiggyBank, Percent, Settings2,
   Zap, Store, ArrowLeftRight, CreditCard, Banknote, GitCompare,
   Coins, RefreshCw, BarChart2, LayoutDashboard, ShieldCheck,
 } from "lucide-react";
 import logo from "@/assets/logo.png.jpg";
+import ManageSociety from "@/app/pages/ManageSociety";
+import MembersMasters from "@/app/pages/MembersMasters";
+import UploadMembersData from "@/app/pages/UploadMembersData";
+import DocumentManager from "@/app/pages/DocumentManager";
+import NoticeManager from "@/app/pages/NoticeManager";
+import PaymentLedgers from "@/app/pages/PaymentLedgers";
+import BillingLedger from "@/app/pages/BillingLedger";
+import SetCharges from "@/app/pages/SetCharges";
+import BillParameter from "@/app/pages/BillParameter";
+import RegularBill from "@/app/pages/RegularBill";
+import SupplementaryBill from "@/app/pages/SupplementaryBill";
+import Receipts from "@/app/pages/Receipts";
+import Payments from "@/app/pages/Payments";
+import Contra from "@/app/pages/Contra";
+import GenReceipts from "@/app/pages/GenReceipts";
+import DebitNote from "@/app/pages/DebitNote";
+import CreditNote from "@/app/pages/CreditNote";
+import UserRights from "@/app/pages/UserRights";
+import SetAccountGroup from "@/app/pages/SetAccountGroup";
+import ComplaintTickets from "@/app/pages/ComplaintTickets";
+import BankMaster from "@/app/pages/BankMaster";
+import CashMaster from "@/app/pages/CashMaster";
+import AddVendors from "@/app/pages/AddVendors";
+import VendorBilling from "@/app/pages/VendorBilling";
 
 interface NavItem {
   icon: any;
@@ -35,46 +59,48 @@ const NAV_STRUCTURE: NavItem[] = [
       { icon: FolderOpen,    label: "Document Manager",   id: "document-manager"   },
       { icon: MessageSquare, label: "Notice Manager",     id: "notice-manager"     },
       { icon: AlertCircle,   label: "Complaint Tickets",  id: "complaint-tickets"  },
-      { icon: Network,       label: "Sub Committee",      id: "sub-committee"      },
-      {
-        icon: Briefcase, label: "Society Staff", id: "society-staff",
-        children: [
-          { icon: UserCog, label: "Staff Profile", id: "staff-profile" },
-          { icon: Lock,    label: "User Rights",   id: "user-rights"   },
-        ],
-      },
     ],
   },
   {
-    icon: Edit, label: "Accounts", id: "accounts",
+    icon: Edit, label: "Account Master", id: "accounts",
     children: [
       {
-        icon: Layers2, label: "Set Groups", id: "set-groups",
+        icon: Layers2, label: "Create Group", id: "set-groups",
         children: [
-          { icon: Layers2, label: "Set Account Group",     id: "set-account-group"     },
-          { icon: Layers2, label: "Set Account Sub Group", id: "set-account-sub-group" },
+          { icon: Layers2, label: "Create Ledger", id: "set-account-group" },
         ],
       },
-      { icon: Wallet, label: "Bank/Cash Master", id: "bank-cash-master" },
       {
-        icon: BookMarked, label: "Account Masters", id: "account-masters",
+        icon: Wallet, label: "Bank/Cash Master", id: "bank-cash-master",
+        children: [
+          { icon: Wallet, label: "Bank Master", id: "bank-master" },
+          { icon: Wallet, label: "Cash Master", id: "cash-master" },
+        ],
+      },
+      {
+        icon: BookMarked, label: "Account Master Head", id: "account-masters",
         children: [
           { icon: BookMarked, label: "Payment Ledgers", id: "payment-ledgers" },
-          { icon: BookMarked, label: "Tarrif Ledgers",  id: "tarrif-ledgers"  },
+          { icon: BookMarked, label: "Billing Ledger",   id: "tarrif-ledgers"  },
         ],
       },
-      { icon: PiggyBank, label: "Budget",         id: "budget"         },
-      { icon: Percent,   label: "Set Charges",    id: "set-charges"    },
-      { icon: Settings2, label: "Bill Parameter", id: "bill-parameter" },
       {
-        icon: Zap, label: "Bill Generation", id: "bill-generation",
+        icon: ReceiptText, label: "Billing Section", id: "billing",
         children: [
-          { icon: Zap, label: "Regular Bill",                   id: "regular-bill"            },
-          { icon: Zap, label: "Regular Bill (Individual)",      id: "regular-bill-individual" },
-          { icon: Zap, label: "Supplementary Bill",             id: "supplementary-bill"      },
-          { icon: Zap, label: "Supplementary Bill (Individual)",id: "supp-bill-individual"    },
+          { icon: Percent,   label: "Set Charges",    id: "set-charges"    },
+          { icon: Settings2, label: "Bill Parameter", id: "bill-parameter" },
+          {
+            icon: Zap, label: "Generate Bill", id: "bill-generation",
+            children: [
+              { icon: Zap, label: "Regular Bill",                    id: "regular-bill"            },
+              { icon: Zap, label: "Regular Bill (Individual)",       id: "regular-bill-individual" },
+              { icon: Zap, label: "Supplementary Bill",              id: "supplementary-bill"      },
+              { icon: Zap, label: "Supplementary Bill (Individual)", id: "supp-bill-individual"    },
+            ],
+          },
         ],
       },
+      { icon: PiggyBank, label: "Budget", id: "budget" },
       {
         icon: Store, label: "Vendor", id: "vendor",
         children: [
@@ -89,7 +115,8 @@ const NAV_STRUCTURE: NavItem[] = [
           { icon: CreditCard,     label: "Payments",               id: "payments"          },
           { icon: Banknote,       label: "Gen. Receipts",          id: "gen-receipts"      },
           { icon: ArrowLeftRight, label: "Contra",                 id: "contra"            },
-          { icon: FileText,       label: "Debit Note/Credit Note", id: "debit-credit-note" },
+          { icon: FileText,       label: "Debit Note",  id: "debit-credit-note" },
+          { icon: FileText,       label: "Credit Note", id: "credit-note"       },
         ],
       },
       { icon: Coins,      label: "Bank Slip",                id: "bank-slip"                },
@@ -190,13 +217,6 @@ const NAV_STRUCTURE: NavItem[] = [
       { icon: FileText,       label: "Daily Visitors In/Out Report", id: "daily-visitors-inout-report" },
     ],
   },
-];
-
-const STAT_CARDS = [
-  { label: "Total Flats",       value: "128", icon: Building2,   bg: "from-cyan-50 to-cyan-100",     iconBg: "from-cyan-400 to-cyan-500",     border: "border-cyan-200",   text: "text-cyan-700"   },
-  { label: "Visitors Today",    value: "0",   icon: Eye,         bg: "from-emerald-50 to-emerald-100",iconBg: "from-emerald-400 to-emerald-500",border: "border-emerald-200",text: "text-emerald-700"},
-  { label: "Staff On Duty",     value: "0",   icon: UserCheck,   bg: "from-violet-50 to-violet-100",  iconBg: "from-violet-400 to-violet-500",  border: "border-violet-200", text: "text-violet-700" },
-  { label: "Pending Approvals", value: "0",   icon: CalendarCheck,bg:"from-orange-50 to-orange-100", iconBg: "from-orange-400 to-orange-500",  border: "border-orange-200", text: "text-orange-700" },
 ];
 
 const FINANCE_CARDS = [
@@ -339,22 +359,56 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         {/* Main */}
         <main className="flex-1 overflow-y-auto p-6 space-y-6">
 
-          {/* Stat cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {STAT_CARDS.map(card => (
-              <div key={card.label} className={`bg-gradient-to-br ${card.bg} rounded-2xl p-4 border ${card.border} flex items-center gap-4`}
-                style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.05)" }}>
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${card.iconBg} flex-shrink-0`}
-                  style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
-                  <card.icon className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="text-slate-500 text-xs font-bold">{card.label}</p>
-                  <p className={`font-black text-2xl ${card.text}`}>{card.value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {activeNav === "manage-society" ? (
+            <ManageSociety />
+          ) : activeNav === "members-masters" ? (
+            <MembersMasters />
+          ) : activeNav === "upload-members" ? (
+            <UploadMembersData />
+          ) : activeNav === "document-manager" ? (
+            <DocumentManager />
+          ) : activeNav === "notice-manager" ? (
+            <NoticeManager />
+          ) : activeNav === "payment-ledgers" ? (
+            <PaymentLedgers />
+          ) : activeNav === "tarrif-ledgers" ? (
+            <BillingLedger />
+          ) : activeNav === "set-charges" ? (
+            <SetCharges />
+          ) : activeNav === "bill-parameter" ? (
+            <BillParameter />
+          ) : activeNav === "regular-bill" ? (
+            <RegularBill />
+          ) : activeNav === "supplementary-bill" ? (
+            <SupplementaryBill />
+          ) : activeNav === "receipts" ? (
+            <Receipts />
+          ) : activeNav === "payments" ? (
+            <Payments />
+          ) : activeNav === "contra" ? (
+            <Contra />
+          ) : activeNav === "gen-receipts" ? (
+            <GenReceipts />
+          ) : activeNav === "debit-credit-note" ? (
+            <DebitNote />
+          ) : activeNav === "credit-note" ? (
+            <CreditNote />
+          ) : activeNav === "user-rights" ? (
+            <UserRights />
+          ) : activeNav === "set-account-group" ? (
+            <SetAccountGroup />
+          ) : activeNav === "complaint-tickets" ? (
+            <ComplaintTickets />
+          ) : activeNav === "bank-master" ? (
+            <BankMaster />
+          ) : activeNav === "cash-master" ? (
+            <CashMaster />
+          ) : activeNav === "add-vendors" ? (
+            <AddVendors />
+          ) : activeNav === "vendor-billing" ? (
+            <VendorBilling />
+          ) : (
+            <>
 
           {/* Financial summary */}
           <div>
@@ -435,6 +489,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               ))}
             </div>
           </div>
+
+            </>
+          )}
 
         </main>
       </div>
