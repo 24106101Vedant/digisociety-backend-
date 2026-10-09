@@ -35,6 +35,15 @@ import BankMaster from "@/app/pages/BankMaster";
 import CashMaster from "@/app/pages/CashMaster";
 import AddVendors from "@/app/pages/AddVendors";
 import VendorBilling from "@/app/pages/VendorBilling";
+import FormIRegister      from "@/app/pages/registers/FormIRegister";
+import FormJRegister      from "@/app/pages/registers/FormJRegister";
+import ShareRegister      from "@/app/pages/registers/ShareRegister";
+import NominationRegister from "@/app/pages/registers/NominationRegister";
+import FDRegister         from "@/app/pages/registers/FDRegister";
+import FixedAssetRegister from "@/app/pages/registers/FixedAssetRegister";
+import VendorRegister     from "@/app/pages/registers/VendorRegister";
+import RenterRegister     from "@/app/pages/registers/RenterRegister";
+import LienRegister       from "@/app/pages/registers/LienRegister";
 
 interface NavItem {
   icon: any;
@@ -85,127 +94,54 @@ const NAV_STRUCTURE: NavItem[] = [
         ],
       },
       {
-        icon: ReceiptText, label: "Billing Section", id: "billing",
-        children: [
-          { icon: Percent,   label: "Set Charges",    id: "set-charges"    },
-          { icon: Settings2, label: "Bill Parameter", id: "bill-parameter" },
-          {
-            icon: Zap, label: "Generate Bill", id: "bill-generation",
-            children: [
-              { icon: Zap, label: "Regular Bill",                    id: "regular-bill"            },
-              { icon: Zap, label: "Regular Bill (Individual)",       id: "regular-bill-individual" },
-              { icon: Zap, label: "Supplementary Bill",              id: "supplementary-bill"      },
-              { icon: Zap, label: "Supplementary Bill (Individual)", id: "supp-bill-individual"    },
-            ],
-          },
-        ],
-      },
-      { icon: PiggyBank, label: "Budget", id: "budget" },
-      {
         icon: Store, label: "Vendor", id: "vendor",
         children: [
           { icon: Store,      label: "Add Vendors",    id: "add-vendors"    },
           { icon: CreditCard, label: "Vendor Billing", id: "vendor-billing" },
         ],
       },
+    ],
+  },
+  {
+    icon: ReceiptText, label: "Billing Section", id: "billing",
+    children: [
+      { icon: Percent,   label: "Set Charges",    id: "set-charges"    },
+      { icon: Settings2, label: "Bill Parameter", id: "bill-parameter" },
       {
-        icon: ArrowLeftRight, label: "Transaction", id: "transaction",
+        icon: Zap, label: "Generate Bill", id: "bill-generation",
         children: [
-          { icon: Banknote,       label: "Receipts",               id: "receipts"          },
-          { icon: CreditCard,     label: "Payments",               id: "payments"          },
-          { icon: Banknote,       label: "Gen. Receipts",          id: "gen-receipts"      },
-          { icon: ArrowLeftRight, label: "Contra",                 id: "contra"            },
-          { icon: FileText,       label: "Debit Note",  id: "debit-credit-note" },
-          { icon: FileText,       label: "Credit Note", id: "credit-note"       },
+          { icon: Zap, label: "Regular Bill",       id: "regular-bill"       },
+          { icon: Zap, label: "Supplementary Bill", id: "supplementary-bill" },
         ],
       },
-      { icon: Coins,      label: "Bank Slip",                id: "bank-slip"                },
-      { icon: GitCompare, label: "Bank Reconciliation",      id: "bank-reconciliation"      },
-      { icon: PiggyBank,  label: "Fixed Deposit",            id: "fixed-deposit"            },
-      { icon: RefreshCw,  label: "Transfer Closing Balance", id: "transfer-closing-balance" },
     ],
   },
   {
-    icon: Landmark, label: "Bank & Cash Reports", id: "bank-cash",
+    icon: ArrowLeftRight, label: "Transaction", id: "transaction",
     children: [
-      { icon: BookOpen,       label: "Bank Book Report",                  id: "bank-book-report"             },
-      { icon: BookOpen,       label: "Cash Book Report",                  id: "cash-book-report"             },
-      { icon: GitCompare,     label: "Reconciliation Report",             id: "reconciliation-report"        },
-      { icon: ReceiptText,    label: "Receipt & Payment",                 id: "receipt-payment"              },
-      { icon: ReceiptText,    label: "Receipt & Payment Consolidated",    id: "receipt-payment-consolidated" },
-      { icon: RefreshCw,      label: "Bounce Entries Report",             id: "bounce-entries-report"        },
-      { icon: TrendingUp,     label: "Fund Flow",                         id: "fund-flow"                    },
+      { icon: Banknote,       label: "Receipts",     id: "receipts"          },
+      { icon: CreditCard,     label: "Payments",     id: "payments"          },
+      { icon: Banknote,       label: "Gen. Receipts", id: "gen-receipts"     },
+      { icon: ArrowLeftRight, label: "Contra",       id: "contra"            },
+      { icon: FileText,       label: "Debit Note",   id: "debit-credit-note" },
+      { icon: FileText,       label: "Credit Note",  id: "credit-note"       },
     ],
   },
-  {
-    icon: TrendingUp, label: "I & E Tracker", id: "ie-tracker",
-    children: [
-      { icon: BookOpen,    label: "General Ledger",  id: "general-ledger"  },
-      { icon: BookMarked,  label: "Tarrif Ledger",   id: "tarrif-ledger"   },
-      { icon: FileText,    label: "Taxes Report",    id: "taxes-report"    },
-      { icon: ReceiptText, label: "Journal Voucher", id: "journal-voucher" },
-      { icon: TrendingUp,  label: "Expense Report",  id: "expense-report"  },
-      { icon: Coins,       label: "Income Report",   id: "income-report"   },
-      { icon: Store,       label: "Vendor Report",   id: "vendor-report"   },
-    ],
-  },
-  {
-    icon: Users, label: "Member Reports", id: "member-reports",
-    children: [
-      { icon: BookOpen,        label: "Opening Balances",       id: "opening-balances"       },
-      { icon: BookMarked,      label: "Member Ledger Format A", id: "member-ledger-format-a" },
-      { icon: BookMarked,      label: "Member Ledger Format B", id: "member-ledger-format-b" },
-      { icon: LayoutDashboard, label: "Bill Dashboard",         id: "bill-dashboard"         },
-      { icon: UserCheck,       label: "Member Account",         id: "member-account"         },
-      {
-        icon: ReceiptText, label: "Receipts/Collection", id: "receipts-collection",
-        children: [
-          { icon: ReceiptText, label: "Posted Receipts",  id: "posted-receipts"  },
-          { icon: CreditCard,  label: "Online Receipts",  id: "online-receipts"  },
-          { icon: FileText,    label: "Collection Sheet", id: "collection-sheet" },
-        ],
-      },
-      { icon: Percent,     label: "Interest Report",       id: "interest-report"      },
-      { icon: AlertCircle, label: "Dues/Advances Report",  id: "dues-advances-report" },
-    ],
-  },
-  {
-    icon: FileText, label: "GST Reports", id: "gst-reports",
-    children: [
-      { icon: ReceiptText,    label: "Members Billing", id: "members-billing" },
-      { icon: ArrowLeftRight, label: "Sales/Purchase",  id: "sales-purchase"  },
-    ],
-  },
-  {
-    icon: BookOpen, label: "Final Accounts", id: "final-accounts",
-    children: [
-      { icon: ClipboardList, label: "Set Index",                                    id: "set-index"              },
-      { icon: BookOpen,      label: "Trial Balance",                                id: "trial-balance"          },
-      { icon: TrendingUp,    label: "Income & Expenditure",                         id: "income-expenditure"     },
-      { icon: BookMarked,    label: "Balance Sheet Format A (Net Balances Format)", id: "balance-sheet-format-a" },
-      { icon: BookMarked,    label: "Balance Sheet Format B (Standard Format)",     id: "balance-sheet-format-b" },
-    ],
-  },
-  {
-    icon: ClipboardList, label: "Society Reports", id: "society-reports",
-    children: [
-      { icon: Network,       label: "Committee Members", id: "committee-members" },
-      { icon: UsersRound,    label: "Society Members",   id: "society-members"   },
-      { icon: UserCheck,     label: "Tenants",           id: "tenants"           },
-      { icon: Building2,     label: "Parking Report",    id: "parking-report"    },
-      { icon: MessageSquare, label: "SMS Report",        id: "sms-report"        },
-      { icon: FileText,      label: "Email Log Report",  id: "email-log-report"  },
-    ],
-  },
+
+
+
   {
     icon: ReceiptText, label: "Registers", id: "registers",
     children: [
-      { icon: PiggyBank, label: "FD Register",      id: "fd-register"      },
-      { icon: Coins,     label: "Shares Register",  id: "shares-register"  },
-      { icon: Lock,      label: "Lien Register",    id: "lien-register"    },
-      { icon: UserCog,   label: "Nominee Register", id: "nominee-register" },
-      { icon: FileText,  label: "Form I",           id: "form-i"           },
-      { icon: FileText,  label: "Form J",           id: "form-j"           },
+      { icon: FileText,  label: "Form I Register",      id: "form-i-register"      },
+      { icon: FileText,  label: "Form J Register",      id: "form-j-register"      },
+      { icon: Coins,     label: "Share Register",       id: "shares-register"      },
+      { icon: UserCog,   label: "Nomination Register",  id: "nominee-register"     },
+      { icon: PiggyBank, label: "FD Register",          id: "fd-register"          },
+      { icon: Building2, label: "Fixed Asset Register", id: "fixed-asset-register" },
+      { icon: Store,     label: "Vendor Register",      id: "vendor-register"      },
+      { icon: UserCheck, label: "Renter Register",      id: "renter-register"      },
+      { icon: Lock,      label: "Lien Register",        id: "lien-register"        },
     ],
   },
   {
@@ -407,6 +343,24 @@ export default function Dashboard({ onLogout }: DashboardProps) {
             <AddVendors />
           ) : activeNav === "vendor-billing" ? (
             <VendorBilling />
+          ) : activeNav === "form-i-register" ? (
+            <FormIRegister />
+          ) : activeNav === "form-j-register" ? (
+            <FormJRegister />
+          ) : activeNav === "shares-register" ? (
+            <ShareRegister />
+          ) : activeNav === "nominee-register" ? (
+            <NominationRegister />
+          ) : activeNav === "fd-register" ? (
+            <FDRegister />
+          ) : activeNav === "fixed-asset-register" ? (
+            <FixedAssetRegister />
+          ) : activeNav === "vendor-register" ? (
+            <VendorRegister />
+          ) : activeNav === "renter-register" ? (
+            <RenterRegister />
+          ) : activeNav === "lien-register" ? (
+            <LienRegister />
           ) : (
             <>
 
