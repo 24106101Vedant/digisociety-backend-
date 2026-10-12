@@ -37,13 +37,16 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest
+import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
-import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import java.time.Duration
 import java.util.UUID
 
@@ -62,33 +65,44 @@ data class DocumentMeta(
 // ── OOP: Spring service component ────────────────────────────────────────────
 @Service
 class DocumentService(
-    private val s3Client:    S3Client,
-    private val s3Presigner: S3Presigner,
-    private val db:          DatabaseConfig
+    private val s3Client: S3Client,
+    private val db:       DatabaseConfig
 ) {
 
     companion object {
         private val log = LoggerFactory.getLogger(DocumentService::class.java)
 
-        // ── Data type: Long — presigned URL expiry in minutes ─────────────────
         private const val PRESIGN_MINUTES: Long = 15L
 
-        // ── Collections: allowed MIME types ───────────────────────────────────
         private val ALLOWED_TYPES: Set<String> = setOf(
             "application/pdf",
             "image/jpeg",
             "image/png",
             "image/webp",
             "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            // Excel
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            // CSV & plain text
+            "text/csv",
+            "text/plain"
         )
 
-        // ── Data type: Long — max file size 10 MB ─────────────────────────────
         private const val MAX_SIZE_BYTES: Long = 10 * 1024 * 1024L
     }
 
     @Value("\${AWS_S3_BUCKET}")
     private lateinit var bucket: String
+
+    @Value("\${AWS_ACCESS_KEY_ID}")
+    private lateinit var accessKeyId: String
+
+    @Value("\${AWS_SECRET_ACCESS_KEY}")
+    private lateinit var secretAccessKey: String
+
+    @Value("\${AWS_REGION:ap-south-1}")
+    private lateinit var region: String
 
     // ─────────────────────────────────────────────────────────────────────────
     // uploadDocument()
@@ -110,7 +124,7 @@ class DocumentService(
         val contentType: String = file.contentType ?: "application/octet-stream"
         if (contentType !in ALLOWED_TYPES) {
             throw IllegalArgumentException(
-                "File type not allowed. Permitted: PDF, JPEG, PNG, WEBP, DOC, DOCX."
+                "File type not allowed. Permitted: PDF, JPEG, PNG, WEBP, DOC, DOCX, XLS, XLSX, CSV."
             )
         }
         if (file.size > MAX_SIZE_BYTES) {
@@ -174,12 +188,20 @@ class DocumentService(
 
         val ownerId = (row["user_id"] as? Long) ?: (row["user_id"] as? Int)?.toLong() ?: 0L
 
-        // ── Exception handling: ownership check ───────────────────────────────
         if (!isAdmin && ownerId != requestingUserId) {
             throw SecurityException("Access denied.")
         }
 
         val s3Key: String = row["s3_key"] as String
+
+        val presigner: S3Presigner = S3Presigner.builder()
+            .region(Region.of(region))
+            .credentialsProvider(
+                StaticCredentialsProvider.create(
+                    AwsBasicCredentials.create(accessKeyId, secretAccessKey)
+                )
+            )
+            .build()
 
         val presignRequest: GetObjectPresignRequest = GetObjectPresignRequest.builder()
             .signatureDuration(Duration.ofMinutes(PRESIGN_MINUTES))
@@ -191,7 +213,7 @@ class DocumentService(
             )
             .build()
 
-        return s3Presigner.presignGetObject(presignRequest).url().toString()
+        return presigner.presignGetObject(presignRequest).url().toString()
     }
 
     // ─────────────────────────────────────────────────────────────────────────

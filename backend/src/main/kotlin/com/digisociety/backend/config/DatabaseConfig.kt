@@ -39,7 +39,7 @@ import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
-import javax.annotation.PostConstruct
+import jakarta.annotation.PostConstruct
 
 // ── OOP: Spring-managed component (bean) ────────────────────────────────────
 @Component

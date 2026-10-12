@@ -88,8 +88,8 @@ dependencies {
 
     // ── AWS S3 ────────────────────────────────────────────────────────────────
     // AWS SDK v2 for S3 — document upload / presigned URL / delete
-    implementation("software.amazon.awssdk:s3:2.25.60")
-    implementation("software.amazon.awssdk:s3-presigner:2.25.60")
+    // Using 2.26.12 — s3-presigner is bundled inside the s3 jar from this version
+    implementation("software.amazon.awssdk:s3:2.26.12")
 
     // ── Test ──────────────────────────────────────────────────────────────────
     testImplementation("org.springframework.boot:spring-boot-starter-test")

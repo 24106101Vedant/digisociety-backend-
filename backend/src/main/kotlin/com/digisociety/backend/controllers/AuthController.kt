@@ -54,6 +54,7 @@ class AuthController(
     // ── OOP: companion object holds logger + JWT constants ───────────────────
     companion object {
         private val log = LoggerFactory.getLogger(AuthController::class.java)
+        val EMAIL_REGEX = Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
     }
 
     @Value("\${JWT_SECRET:DigisocietySecret123}")
@@ -306,9 +307,4 @@ class AuthController(
     private fun conflict(message: String): ResponseEntity<Map<String, Any?>> =
         ResponseEntity.status(HttpStatus.CONFLICT)
             .body(mapOf("success" to false, "message" to message))
-
-    // ── Companion: shared regex constant (data type: Regex) ──────────────────
-    private companion object {
-        val EMAIL_REGEX = Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
-    }
 }

@@ -281,8 +281,8 @@ object CollectionOpsDemo {
             sampleUnits.first { it.unitNumber == unitNumber }.also {
                 log.info("[findUnit] Found: ${it.unitNumber} — ${it.ownerName}")
             }
-        }.recoverWith { _ ->
-            Result.failure(UnitNotFoundException(unitNumber))
+        }.recover { _ ->
+            throw UnitNotFoundException(unitNumber)
         }
 }
 
